@@ -6,8 +6,8 @@ $(document).ready(function () {
       amenity_names.push($(this).attr('data-name'));
       amenity_ids.push($(this).attr('data-id'));
       let txt = amenity_names.join(', ');
-      if (txt.length > 45) {
-	$('.amenities h4').text(txt.substr(0,45) + '....');
+      if (txt.length > 25) {
+	$('.amenities h4').text(txt.substr(0,25) + '...');
       } else {
 	$('.amenities h4').text(txt);
       }
@@ -17,8 +17,8 @@ $(document).ready(function () {
       amenity_names.splice(name_index, 1);
       amenity_ids.splice(id_index, 1);
       let txt = amenity_names.join(', ');
-      if (txt.length > 45) {
-        $('.amenities h4').text(txt.substr(0,45) + '....');
+      if (txt.length > 25) {
+        $('.amenities h4').text(txt.substr(0,25) + '....');
       } else {
         $('.amenities h4').text(txt);
       }
