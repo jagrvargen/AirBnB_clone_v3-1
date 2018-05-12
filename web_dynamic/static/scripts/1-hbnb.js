@@ -1,3 +1,7 @@
+// This script listens on each Amenity <input> field.
+// If the checkbox is checked, the amenity is added to an object called 'selected'
+// If the amenity is unchecked, it is removed from 'selected'
+// The <H4> Amenity tag is updated dynamically when boxes are checked/unchecked
 $(document).ready(function () {
   let amenity_ids = [];
   let amenity_names = [];
