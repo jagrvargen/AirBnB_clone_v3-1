@@ -71,6 +71,22 @@ def places_with_id(place_id=None):
         return jsonify(place_obj.to_json()), 200
 
 
+@app_views.route('/places_by_amenities/<ids>', methods=['POST'])
+def places_by_amenities(ids=None):
+    """
+        places route to handle GET request for places by amenity ids
+    """
+    result = []
+    all_ids = ids.split(',')
+    all_places = [p for p in storage.all('Place').values()]
+    for place in all_places:
+        for amen in place.amenities:
+            for id in all_ids:
+                if amen.id == id:
+                    if (place.id not in result):
+                        result.append(place.to_json())
+    return jsonify(result)
+
 @app_views.route('/places_search', methods=['POST'])
 def places_search():
     """
