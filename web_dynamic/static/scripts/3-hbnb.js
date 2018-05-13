@@ -31,7 +31,7 @@ $(document).ready(function () {
 });
 
 // Toggles the API status circle in upper-right hand part of webpage
-// Red is API status is OK, grey if now.
+// Red is API status is OK, grey if not.
 $(document).ready(function () {
     let url = 'http://0.0.0.0:5001/api/v1/status/';
     $.ajax({
@@ -44,3 +44,28 @@ $(document).ready(function () {
     })
 });
 
+// Loops through all Places and displays them on web page
+$(document).ready(function () {
+    let url = 'http://0.0.0.0:5001/api/v1/places_search/';
+    $.ajax({
+        url: url,
+        type: 'POST',
+        data: JSON.stringify({}),
+        headers: {'Content-Type': 'application/json'},
+        success: function (data) {
+            for (let i = 0; i < data.length; i++) {
+                html = '<article>\n<div class="title">\n<h2>' + data[i].name + '</h2>' +
+                       '<div class="price_by_night">' + data[i].price_by_night + '</div></div>' +
+                       '<div class="information"><div class="max_guest">' +
+                       '<i class="fa fa-users fa-3x" aria-hidden="true"></i>' +
+                       '<br />' + data[i].max_guest + '</div>' +
+                       '<div class="number_rooms"><i class="fa fa-bed fa-3x" aria-hidden="true"></i>' +
+                       '<br />' + data[i].number_rooms + '</div>' +
+                       '<div class="number_bathrooms"><i class="fa fa-bath fa-3x" aria-hidden="true"></i>' +
+                       '<br />' + data[i].number_bathrooms + '</div></div>' +
+                       '<div class="description">' + data[i].description + '</div></article>'
+                $('section.places').append(html)
+            }
+        },
+    })
+});
