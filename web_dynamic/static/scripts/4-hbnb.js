@@ -5,7 +5,7 @@
 $(document).ready(function () {
   let amenity_ids = [];
   let amenity_names = [];
-  $('input').on('click', function (event) {
+  $('input').on('click', function () {
     if ($(this).prop('checked')) {
       amenity_names.push($(this).attr('data-name'));
       amenity_ids.push($(this).attr('data-id'));
@@ -14,18 +14,18 @@ $(document).ready(function () {
 	      $('.amenities h4').text(txt.substr(0,25) + '...');
       } else {
 	      $('.amenities h4').text(txt);
-      }
+        }
       } else {
-      let name_index = amenity_names.indexOf($(this).attr('data-name'));
-      let id_index = amenity_ids.indexOf($(this).attr('data-id'));
-      amenity_names.splice(name_index, 1);
-      amenity_ids.splice(id_index, 1);
-      let txt = amenity_names.join(', ');
-      if (txt.length > 25) {
-        $('.amenities h4').text(txt.substr(0,25) + '....');
-      } else {
-        $('.amenities h4').text(txt);
-      }
+          let name_index = amenity_names.indexOf($(this).attr('data-name'));
+          let id_index = amenity_ids.indexOf($(this).attr('data-id').replace(',', ''));
+          amenity_names.splice(name_index, 1);
+          amenity_ids.splice(id_index, 1);
+          let txt = amenity_names.join(', ');
+          if (txt.length > 25) {
+            $('.amenities h4').text(txt.substr(0,25) + '....');
+          } else {
+            $('.amenities h4').text(txt);
+          }
       }
   })
   $('button').click(function () {
@@ -39,7 +39,6 @@ $(document).ready(function () {
           url: url,
           type: 'POST',
           success: function (data) {
-              alert('found ' + data.length + ' places')
               for (let i = 0; i < data.length; i++) {
                   html = '<article>\n<div class="title">\n<h2>' + data[i].name + '</h2>' +
                          '<div class="price_by_night">' + data[i].price_by_night + '</div></div>' +
