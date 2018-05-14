@@ -87,6 +87,16 @@ def places_by_amenities(ids=None):
                         result.append(place.to_json())
     return jsonify(result)
 
+@app_views.route('/places_by_amenities', methods=['POST'])
+def places_by_amenities_empty():
+    """
+        places route to handle POST request for all places. handles the
+        case for when a user clicks on "search" without selecting any
+        amenities. just returns all places.
+    """
+    all_places = [p for p in storage.all('Place').values()]
+    return jsonify([p.to_json() for p in all_places])
+
 @app_views.route('/places_search', methods=['POST'])
 def places_search():
     """
