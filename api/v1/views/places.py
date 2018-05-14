@@ -74,18 +74,20 @@ def places_with_id(place_id=None):
 @app_views.route('/places_by_amenities/<ids>', methods=['POST'])
 def places_by_amenities(ids=None):
     """
-        places route to handle GET request for places by amenity ids
+        places route to handle POST request for places by amenity ids
     """
     result = []
     all_ids = ids.split(',')
     all_places = [p for p in storage.all('Place').values()]
     for place in all_places:
-        for amen in place.amenities:
-            for id in all_ids:
-                if amen.id == id:
-                    if (place.id not in result):
-                        result.append(place.to_json())
-    return jsonify(result)
+        count = 0
+        for a_id in all_ids:
+            amen_ids = [amen.id for amen in place.amenities]
+            if a_id in amen_ids:
+                count += 1
+        if count == len(all_ids):
+            result.append(place)
+    return jsonify([p.to_json() for p in result])
 
 @app_views.route('/places_by_amenities', methods=['POST'])
 def places_by_amenities_empty():
